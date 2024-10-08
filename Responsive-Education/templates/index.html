@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Education Website</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8; /* Light background for the overall page */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+    
+        .feedback {
+    background-color: #ffffff; /* Light background for the form container */
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    color: #18212b; /* Blue color for the heading */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feedback .section-desc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* You can keep the gap here or increase it */
+}
+
+.feedback-form label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #111922; /* Blue color for labels */
+    font-weight: bold; /* Make the labels bolder */
+}
+
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f9f9f9; /* Light background for input fields */
+    margin-bottom: 15px; /* Added margin-bottom for spacing between inputs */
+}
+
+.feedback-form input:focus,
+.feedback-form select:focus,
+.feedback-form textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.feedback-form textarea {
+    resize: vertical;
+    height: 100px;
+}
+
+.feedback-form button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    margin-top: 30px;
+    background-color: #171b20;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.feedback-form button:hover {
+    background-color: #a6a9ac;
+}
+
+/* Alternate background colors for different sections */
+.feedback:nth-child(odd) {
+    background-color: #e9f2fc; /* Light blue background */
+}
+
+.feedback:nth-child(even) {
+    background-color: #d1e7f8; /* Slightly darker blue background */
+}
+
+
+    </style>
+    
+    <style>
+        @media only screen and (max-width: 991px) {
+  html {
+    font-size: 56.25%;
+  }
+  .row {
+    flex-direction: column;
+  }
+  section,
+  footer {
+    padding: 7.5rem 5rem;
+  }
+  header {
+    padding: 2.2rem 5rem;
+  }
+  section.hero {
+    grid-template-columns: 1fr;
+    background: linear-gradient(
+      45deg,
+      rgb(var(--grad-color-1)),
+      rgb(var(--grad-color-2))
+    );
+  }
+  #header-shape {
+    display: none;
+  }
+  .hero-img {
+    grid-row: 1;
+  }
+  nav ul a,
+  nav a#logo {
+    color: var(--white-shade-1);
+  }
+  .hero-content h1,
+  .hero-content p {
+    text-align: center;
+  }
+  .hero-content h1 {
+    color: var(--white-shade-1);
+  }
+  .hero-content p {
+    color: var(--white-shade-2);
+  }
+  .hero-content .primary-btn {
+    background-color: var(--white-shade-1);
+    color: var(--base-shade-1);
+  }
+  .hero-content .secondary-btn {
+    color: var(--white-shade-1);
+    border-color: var(--white-shade-1);
+  }
+  .btn-container {
+    justify-content: center;
+  }
+  .download-app img {
+    width: 30%;
+  }
+  .app-feature div {
+    justify-content: center;
+  }
+  .app-feature p {
+    text-align: center;
+  }
+  .download-app a img {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  html {
+    font-size: 50%;
+  }
+  header {
+    padding: 2rem 4rem;
+  }
+  #ham-menu {
+    display: block;
+    color: var(--white-shade-1);
+  }
+  nav a#logo,
+  #ham-menu {
+    font-size: var(--heading-font-size-2);
+  }
+  nav ul {
+    background-color: var(--black-shade-1);
+    position: fixed;
+    left: -100vw;
+    top: 70.4px;
+    height: calc(100vh - 70.4px);
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    transition: 1s;
+    gap: 0;
+  }
+  nav ul a {
+    font-size: var(--heading-font-size-3);
+  }
+  .sticky nav ul a {
+    color: var(--white-shade-1);
+  }
+  nav ul a:hover {
+    color: var(--base-shade-1);
+  }
+  #scroll-top {
+    height: 6rem;
+    width: 6rem;
+  }
+}
+@media only screen and (max-width: 575px) {
+  html {
+    font-size: 46.87%;
+  }
+  header {
+    padding: 2rem 3rem;
+  }
+  section,
+  footer {
+    padding: 7.5rem 3rem;
+  }
+  .features .column {
+    padding: 4rem 2rem;
+  }
+  nav ul {
+    top: 65.18px;
+    height: calc(100vh - 65.18px);
+  }
+}
+
+    </style>
+    <style>
+        /*------ Variables ------*/
+:root {
+  --base-shade-1: #00a8fa;
+  --white-shade-1: #ffffff;
+  --white-shade-2: #d7e1f3;
+  --black-shade-1: #232323;
+  --black-shade-2: #676a8b;
+  --grad-color-1: 0, 180, 250;
+  --grad-color-2: 21, 120, 255;
+
+  --base-font-size: 1.6rem;
+
+  --heading-font-size-1: 4rem;
+  --heading-font-size-2: 3.2rem;
+  --heading-font-size-3: 2rem;
+  --heading-font-size-4: 1.8rem;
+
+  --border-radius-1: 1rem;
+  --border-radius-2: 0.5rem;
+}
+/*------ Base Styles ------*/
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+*:not(i) {
+  font-family: "Poppins", sans-serif;
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+/*------ Utility Classes ------*/
+
+section,
+footer {
+  padding: 9rem 5rem;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5rem;
+}
+.column {
+  width: 100%;
+}
+.section-desc {
+  text-align: center;
+  margin: 2rem 0 6rem 0;
+}
+h1 {
+  font-size: var(--heading-font-size-1);
+  color: var(--black-shade-1);
+  margin-bottom: 2rem;
+  word-spacing: 1rem;
+  line-height: 1.6;
+}
+h2 {
+  font-size: var(--heading-font-size-2);
+  color: var(--black-shade-1);
+  font-weight: 700;
+  text-align: center;
+}
+h3 {
+  font-size: var(--heading-font-size-3);
+  color: var(--black-shade-1);
+  font-weight: 700;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+h4 {
+  font-size: var(--heading-font-size-4);
+  color: var(--black-shade-2);
+  margin: 1.5rem 0;
+}
+p,
+button {
+  font-size: var(--base-font-size);
+  color: var(--black-shade-2);
+  line-height: 1.8;
+  font-weight: 400;
+}
+.btn {
+  background-color: transparent;
+  padding: 1rem 2rem;
+  border-radius: var(--border-radius-2);
+  border: none;
+  margin: 2rem 0;
+}
+.primary-btn {
+  background-color: var(--base-shade-1);
+  color: var(--white-shade-1);
+}
+.secondary-btn {
+  border: 0.3rem solid var(--base-shade-1);
+  color: var(--base-shade-1);
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  padding: 3rem 0; /* Removed left and right padding */
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color:#f0f4f8; /* Add background color to make sure the content below isn't visible behind the header */
+  z-index: 1000; /* Ensure the header is above other content */
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #232323;
+  margin: 0 auto;
+  padding: 0 5rem; /* Added padding inside the nav for content */
+  width: 100%;
+  box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  font-size: var(--heading-font-size-4);
+  text-decoration: none;
+}
+
+nav a#logo {
+  color: var(--black-shade-1);
+  font-weight: 700;
+}
+
+nav ul a {
+  color: var(--white-shade-1);
+}
+
+/*-- SideMenu --*/
+#ham-menu {
+  display: none;
+}
+nav ul.active {
+  left: 0;
+}
+/*-- Sticky Header --*/
+.sticky {
+  background-color: var(--white-shade-1);
+  box-shadow: 0 2rem 1.5rem rgba(0, 0, 0, 0.05);
+}
+.sticky nav ul a,
+.sticky nav a#logo,
+.sticky #ham-menu {
+  color: var(--black-shade-1);
+}
+/*-- Link Hover Effect --*/
+nav ul a:hover {
+  color: var(--black-shade-1);
+}
+.sticky nav ul a:hover {
+  color: var(--base-shade-1);
+}
+/*------ Section: Hero ------*/
+/*------ Section: Hero ------*/
+section.hero {
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  flex: 1;
+  text-align: left; /* Keep text aligned to the left */
+}
+
+/*------ Section: Hero ------*/
+section.hero {
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  flex: 1;
+  text-align: left; /* Keep text aligned to the left */
+}
+
+.hero-img {
+  flex: 1;
+  text-align: right;/* Align image to the right */
+}
+
+.hero-img img {
+  width:650px;
+  max-width:80%; /* Ensure image scales correctly */
+  height: 440px; 
+  border-radius: 50px;
+  margin-top: 80px;
+  margin-left:1000px;/* Maintain aspect ratio */
+}
+
+
+#header-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.btn-container {
+  display: flex;
+  gap: 3rem;
+}
+/*------ Section: Features ------*/
+.features .row {
+  align-items: stretch;
+}
+.features .column {
+  padding: 6rem 2rem;
+  border-radius: var(--border-radius-1);
+}
+.features .column p {
+  text-align: center;
+}
+.features h3 {
+  margin: 3rem 0;
+}
+.features i {
+  display: block;
+  height: 6rem;
+  width: 6rem;
+  margin: 0 auto;
+  font-size: 3.5rem;
+  background-color: var(--base-shade-1);
+  color: var(--white-shade-1);
+  padding: 1.3rem 0;
+  text-align: center;
+  border-radius: var(--border-radius-2);
+}
+.features .column:hover {
+  background-color: var(--base-shade-1);
+}
+.features .column:hover h3 {
+  color: var(--white-shade-1);
+}
+.features .column:hover p {
+  color: var(--white-shade-2);
+}
+.features .column:hover i {
+  background-color: var(--white-shade-1);
+  color: var(--base-shade-1);
+}
+/*------ Section: Courses ------*/
+.courses .row {
+  align-items: stretch;
+}
+.courses .column {
+  box-shadow: 0 0.5rem 2.4rem 0.6rem rgba(0, 0, 0, 0.06);
+  border-radius: var(--border-radius-1);
+  display: flex;
+  flex-direction: column;
+}
+.courses .column > *:not(img) {
+  padding: 0 2rem;
+}
+.courses .column img {
+  border-radius: var(--border-radius-1) var(--border-radius-1) 0 0;
+  width: 100%;
+}
+.courses .column p {
+  text-align: center;
+  flex-grow: 1;
+}
+.courses-btn {
+  display: flex;
+  justify-content: center;
+}
+.courses-btn .btn:hover {
+  color: var(--white-shade-1);
+  background-color: var(--base-shade-1);
+}
+/*------ Section: Testimonials ------*/
+.testimonial {
+  background-image: linear-gradient(
+      45deg,
+      rgba(var(--grad-color-1), 0.8),
+      rgba(var(--grad-color-2), 0.8)
+    ),
+    url(testimonial-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.testimonial h2,
+.testimonial .section-desc {
+  color: var(--white-shade-1);
+}
+.testimonial .row {
+  align-items: stretch;
+}
+.testimonial .column {
+  background-color: var(--white-shade-1);
+  padding: 4rem 3rem;
+  text-align: center;
+  border-radius: var(--border-radius-1);
+  display: flex;
+  flex-direction: column;
+}
+.testimonial-image {
+  height: 14rem;
+  width: 14rem;
+  margin: auto;
+  padding: 0.9rem;
+  background: linear-gradient(
+    var(--white-shade-1) 50%,
+    var(--base-shade-1) 50%
+  );
+  border-radius: 50%;
+}
+.testimonial-image img {
+  width: 100%;
+  border-radius: 50%;
+}
+.testimonial .column p {
+  margin: 4rem 0;
+  flex-grow: 1;
+}
+/*------ Section: Download App ------*/
+.download-app .column:nth-child(1) {
+  display: flex;
+  justify-content: center;
+}
+.download-app .column:nth-child(2) {
+  padding: 0 2rem;
+}
+.download-app img {
+  display: block;
+  width: 45%;
+}
+.app-feature {
+  border-bottom: 1.5px dashed rgba(var(--grad-color-1), 0.4);
+}
+.app-feature:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+.app-feature div {
+  display: flex;
+  gap: 2rem;
+}
+.app-feature p {
+  margin-bottom: 1.5rem;
+}
+.download-app .fas {
+  display: inline-block;
+  background-color: var(--white-shade-2);
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  font-size: 2rem;
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--base-shade-1);
+}
+.download-app h3 {
+  display: inline-block;
+}
+.download-btns {
+  display: flex;
+}
+.download-btns a {
+  display: inline;
+  text-align: center;
+}
+.download-btns a img {
+  display: inline-block;
+  width: 70%;
+}
+/*------ Section: Footer ------*/
+footer {
+  background-color: var(--black-shade-1);
+}
+footer h3 {
+  margin: 0;
+}
+footer h3,
+footer h4 {
+  color: var(--white-shade-1);
+  text-align: center;
+}
+footer .row {
+  margin-bottom: 6rem;
+}
+.footer-about {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 2px solid var(--white-shade-1);
+}
+.social-links {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+}
+.social-links a {
+  font-size: 3rem;
+  text-decoration: none;
+  color: var(--white-shade-1);
+}
+footer p {
+  text-align: center;
+}
+
+/*------ Scroll Top Button ------*/
+#scroll-top {
+  position: fixed;
+  display: none;
+  place-items: center;
+  height: 5rem;
+  width: 5rem;
+  right: 3rem;
+  bottom: 3rem;
+  background-color: var(--base-shade-1);
+  color: var(--white-shade-1);
+  border: none;
+  outline: none;
+  font-size: var(--heading-font-size-3);
+  border-radius: var(--border-radius-2);
+  box-shadow: 0 1.5rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  </head>
+<body>
+    <button id="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <header>
+        <nav>
+            <a href="#home" id="logo">Jash</a>
+            <i class="fas fa-bars" id="ham-menu"></i>
+            <ul id="nav-bar">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#courses">AI's</a></li>
+                <li><a href="#feedback">Feedback</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>AI-Powered Mental Health Support</h1>
+            <p>
+                Welcome to Jash, your personalized mental health companion for college students.</br> We offer AI-powered support, empathetic conversations, and resources tailored to your unique challenges, from academic pressures to social dynamics.
+            </p>
+            <div class="btn-container">
+                <button class="primary-btn btn">Create your profile</button>
+            </div>
+        </div>
+        <div class="hero-img">
+            <img src="https://i.pinimg.com/564x/67/51/42/675142bfe2e642f85a26e3799b8ee304.jpg" id="header-shape" />
+        </div>
+    </section>
+    <section class="features" id="features">
+        <h2>Why Choose Us</h2>
+        <p class="section-desc">Prioritizing Mental Health Through Smart Learning</p>
+        <div class="row">
+            <div class="column">
+                <i class="fas fa-star"></i>
+                <h3>The Importance of Mental Health Awareness</h3>
+                <p>
+                    Discuss why mental health awareness is crucial in today’s society, especially in light of rising stress levels and mental health issues. Provide statistics and studies that highlight the prevalence of mental health conditions.
+                </p>
+            </div>
+            <div class="column">
+                <i class="fas fa-thumbs-up"></i>
+                <h3>Strategies for Managing Anxiety and Stress</h3>
+                <p>
+                    Introduce various techniques for managing anxiety and stress, such as mindfulness, breathing exercises, and cognitive-behavioral strategies. Provide a step-by-step guide to creating a personalized stress management plan.
+                </p>
+            </div>
+            <div class="column">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Mental Health in the Workplace</h3>
+                <p>
+                    Highlight the importance of mental health support in the workplace, including the role of employers and HR departments. Provide examples of effective workplace mental health initiatives, such as employee assistance programs, flexible work schedules, and mental health days.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="courses" id="courses">
+        <h2>JASH AI</h2>
+        <p class="section-desc">"Revolutionizing mental health support with advanced AI-driven insights and solutions."</p>
+        <div class="row">
+            <div class="column">
+                <img src="https://scitechdaily.com/images/Human-Robot-Interaction.jpg" />
+                <h3>IBOT</h3>
+                <p>"Connecting with your emotions, one expression at a time."</p>
+                <div class="courses-btn">
+                    <a href="{{ url_for('second.chat1') }}"><button class="btn secondary-btn">Explore More</button></a>
+                </div>
+            </div>
+            <div class="column">
+                <img src="https://i.pinimg.com/564x/39/42/01/394201f255138e6df126fbb137ce7972.jpg" />
+                <h3>STRESS ANALYZER</h3>
+                <p>"Instantly assess your stress levels with our AI-driven stress analyzer for personalized support."</p>
+                <div class="courses-btn">
+                    <a href="{{ url_for('third.index') }}"><button class="btn secondary-btn">Explore More</button></a>
+                </div>
+            </div>
+            <div class="column">
+    <img src="https://i.pinimg.com/564x/de/a6/bc/dea6bca66dbe51616cf95635c9c6f36d.jpg" />
+    <h3>EMOTION DETECTION</h3>
+    <p>"AI-powered facial emotion detection that analyzes and understands your emotional state in real-time."</p>
+    <div class="courses-btn">
+        <a href="{{ url_for('four.four') }}"><button class="btn secondary-btn">Explore More</button></a>
+    </div>
+</div>
+>
+            </div>
+        </div>
+    </section>
+    <section class="feedback" id="feedback">
+      <h2>We Value Your Feedback</h2>
+      <p class="section-desc">Share your experience with us and help us improve our platform.</p>
+      <div class="feedback-form">
+          <form id="feedback-form">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+              
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="Your email" required>
+              
+              <label for="stress-level">Stress Level</label>
+              <select id="stress-level" name="stress-level" required>
+                  <option value="" disabled selected>Select your stress level</option>
+                  <option value="low">Low</option>
+                  <option value="moderate">Moderate</option>
+                  <option value="high">High</option>
+              </select>
+              
+              <label for="feedback-text">Feedback on the Platform</label>
+              <textarea id="feedback-text" name="feedback" placeholder="Share your thoughts..." required></textarea>
+              
+              <button type="submit">Submit Feedback</button>
+          </form>
+      </div>
+  </section>
+  
+  <script type="text/javascript">
+      // Initialize EmailJS with your public key
+      (function(){
+          emailjs.init("md64B-mc3xSbY6a2K"); // Replace with your EmailJS public key
+      })();
+
+      // Function to handle form submission
+      document.getElementById('feedback-form').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // Collect the data from the form fields
+          const name = document.getElementById('name').value;
+          const email = document.getElementById('email').value;
+          const stressLevel = document.getElementById('stress-level').value;
+          const feedback = document.getElementById('feedback-text').value;
+
+          // Prepare the email parameters
+          const emailParams = {
+              name: name,
+              email: email,
+              stress_level: stressLevel,
+              feedback: feedback
+          };
+
+          // Send the email via EmailJS
+          emailjs.send("service_emjvssj", "template_pn50bbr", emailParams)
+              .then(function(response) {
+                  alert("Feedback sent successfully!");
+                  document.getElementById('feedback-form').reset(); // Reset the form after submission
+              }, function(error) {
+                  alert("Failed to send feedback: " + JSON.stringify(error));
+              });
+      });
+  </script>
+  
+    <script>
+        let hamMenuIcon = document.getElementById("ham-menu");
+let navBar = document.getElementById("nav-bar");
+let navLinks = navBar.querySelectorAll("li");
+let scrollTopBtn = document.getElementById("scroll-top");
+
+/* SideMenu Toggle */
+hamMenuIcon.addEventListener("click", () => {
+  navBar.classList.toggle("active");
+  hamMenuIcon.classList.toggle("fa-times");
+});
+navLinks.forEach((navLinks) => {
+  navLinks.addEventListener("click", () => {
+    navBar.classList.remove("active");
+    hamMenuIcon.classList.toggle("fa-times");
+  });
+});
+
+let header = document.querySelector("header");
+window.onscroll = () => {
+  /* Sticky Header */
+  let pos = document.documentElement.scrollTop;
+  if (pos > 0) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+  /* Scroll Top Button */
+  if (pos > 300) {
+    scrollTopBtn.style.display = "grid";
+  } else {
+    scrollTopBtn.style.display = "none";
+  }
+
+  scrollTopBtn.addEventListener("click", () => {
+    document.documentElement.scrollTop = 0;
+  });
+};
+
+    </script>
+</body>
+</html>

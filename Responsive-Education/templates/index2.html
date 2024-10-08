@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <style>
+     :root {
+    --primary-color: #8aa8cc;
+    --secondary-color: #0e2a37;
+    --background-gradient: linear-gradient(135deg, #8aa8cc, #75a2e5);
+    --text-color: #333;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: var(--background-gradient);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative; /* Add relative positioning to the body */
+    overflow: hidden;
+}
+
+/* Adding background image with blur effect */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-blue-smart-light-tech-background-backgroundlight-effect-backgroundelectronic-image_81225.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px); /* Apply blur effect */
+    z-index: -1; /* Ensure the background is behind content */
+    opacity: 0.7; /* Optional: Make the background semi-transparent */
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px;
+    position: relative; /* Ensure the container is above the blurred background */
+    z-index: 1; /* Place it above the blurred background */
+}
+
+.video-container {
+    flex: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+}
+
+.video-container img {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.info-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.emotion-tip-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+#emotion-tip {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    background-color: #0e2a37;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #8aa8cc;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+    .video-container, .info-container {
+        width: 90%;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Emotion Detection</h1>
+    <div class="main-container">
+        <div class="video-container">
+            <img src="{{ url_for('four.video_feed') }}" alt="Video feed">
+        </div>
+        <div class="info-container">
+            <div class="emotion-tip-container">
+                <div id="emotion-tip">Waiting for emotion detection...</div>
+            </div>
+            <div class="button-container">
+                <button onclick="startVideo()">Start Video</button>
+                <button onclick="stopVideo()">Stop Video</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTip() {
+            fetch("{{ url_for('four.get_tip_route') }}")
+                .then(response => response.json())
+                .then(data => {
+                    const tipElement = document.getElementById('emotion-tip');
+                    tipElement.innerText = data;
+                    tipElement.style.backgroundColor = getEmotionColor(data);
+                })
+                .catch(error => console.error('Error fetching emotion tip:', error));
+        }
+
+        function getEmotionColor(tip) {
+            if (tip.includes("Happy")) return "#2ecc71";
+            if (tip.includes("Sad")) return "#3498db";
+            if (tip.includes("Angry")) return "#e74c3c";
+            if (tip.includes("Surprise")) return "#f39c12";
+            if (tip.includes("Fear")) return "#9b59b6";
+            if (tip.includes("Disgust")) return "#1abc9c";
+            return "#0e2a37"; // Default color
+        }
+
+        function startVideo() {
+            fetch("{{ url_for('four.start_video') }}", {method: 'POST'})
+                .then(() => {
+                    console.log('Video started');
+                    document.querySelector('.video-container').style.display = 'block';
+                })
+                .catch(error => console.error('Error starting video:', error));
+        }
+
+        function stopVideo() {
+            fetch("{{ url_for('four.stop_video') }}", {method: 'POST'})
+                .then(() => {
+                    console.log('Video stopped');
+                    document.querySelector('.video-container').style.display = 'none';
+                })
+                .catch(error => console.error('Error stopping video:', error));
+        }
+
+        // Update the tip every 5 seconds
+        setInterval(updateTip, 5000);
+    </script>
+</body>
+</html>

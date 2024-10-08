@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallpapercave.com/wp/wp8047357.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px); /* Glass effect */
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Optional border */
+            text-align: center;
+        }
+        h1 {
+            color: #051c49;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button#next-button {
+            background-color: #6A5ACD;
+            color: white;
+        }
+        button#submit-button {
+            background-color: #FF4500;
+            color: white;
+        }
+        button#prev-button {
+            background-color: #4682B4;
+            color: white;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+        .hidden {
+            display: none;
+        }
+        #question-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="questions-container">
+            <h1>Stress Analysis - Questions</h1>
+            <form id="questions-form" method="post" action="{{ url_for('third.index') }}">
+                <div id="question-box">
+                    <!-- Question will be dynamically inserted here -->
+                </div>
+                <button type="button" id="prev-button" class="hidden" onclick="prevQuestion()">Previous</button>
+                <button type="button" id="next-button" onclick="nextQuestion()">Next</button>
+                <button type="button" id="submit-button" class="hidden" onclick="submitForm()">Submit</button>
+            </form>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <h1>Stress Level Analysis</h1>
+            <img id="result-graph" src="" alt="Stress Level Graph">
+            <a href="#" onclick="goBack()">Go Back</a>
+        </div>
+    </div>
+
+    <script>
+        const questions = {{ questions|tojson }};
+        let currentQuestionIndex = 0;
+        const formData = {};
+
+        function showQuestion(index) {
+            if (index < 0 || index >= questions.length) return;
+
+            const questionBox = document.getElementById('question-box');
+            questionBox.innerHTML = `
+                <label for="q${index}">${questions[index]}</label>
+                <select id="q${index}" name="q${index}" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="sorrow">😢 Sorrow</option>
+                    <option value="happy">😊 Happy</option>
+                    <option value="sad">😞 Sad</option>
+                    <option value="normal">😐 Normal</option>
+                    <option value="neutral">😶 Neutral</option>
+                </select>
+            `;
+
+            document.getElementById('prev-button').classList.toggle('hidden', index === 0);
+            document.getElementById('next-button').classList.toggle('hidden', index === questions.length - 1);
+            document.getElementById('submit-button').classList.toggle('hidden', index !== questions.length - 1);
+        }
+
+        function nextQuestion() {
+            const select = document.getElementById(`q${currentQuestionIndex}`);
+            if (select && select.value === "") {
+                alert('Please select an option before proceeding.');
+                return;
+            }
+
+            if (select) {
+                formData[`q${currentQuestionIndex}`] = select.value;
+            }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function prevQuestion() {
+            const select = document.getElementById(`q${currentQuestionIndex}`);
+            if (select && select.value === "") {
+                alert('Please select an option before proceeding.');
+                return;
+            }
+
+            if (select) {
+                formData[`q${currentQuestionIndex}`] = select.value;
+            }
+
+            currentQuestionIndex--;
+            showQuestion(currentQuestionIndex);
+        }
+
+        function submitForm() {
+            const select = document.getElementById(`q${currentQuestionIndex}`);
+            if (select && select.value === "") {
+                alert('Please select an option before submitting.');
+                return;
+            }
+
+            if (select) {
+                formData[`q${currentQuestionIndex}`] = select.value;
+            }
+
+            fetch('{{ url_for('third.index')}}', { // Updated URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('questions-container').classList.add('hidden');
+                document.getElementById('result-container').classList.remove('hidden');
+                document.getElementById('result-graph').src = 'data:image/png;base64,' + result.plot_url;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function goBack() {
+            document.getElementById('questions-container').classList.remove('hidden');
+            document.getElementById('result-container').classList.add('hidden');
+        }
+
+        showQuestion(currentQuestionIndex);
+    </script>
+</body>
+</html>

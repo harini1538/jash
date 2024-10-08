@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative; /* Required for positioning the pseudo-element */
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Align children vertically */
+    justify-content: flex-start; /* Aligns content to the top */
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://img.freepik.com/premium-vector/chatbot-blue-background-artificial-intelligence-concept-vector-illustration_319430-71.jpg?w=740'); /* Background image */
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px); /* Adjust blur level */
+    z-index: -1; /* Send the background behind other content */
+}
+
+/* Chat Messages */
+.chat-message {
+    padding: 10px 25px;
+    border-radius: 15px;
+    margin: 15px 25px 20px 60px; /* Added left margin to account for avatar */
+    display: flex;
+    align-items: flex-start; /* Aligns items vertically */
+    max-width: calc(100% - 30px); /* Adjust width to prevent overflow */
+    word-wrap: break-word;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px); /* Apply blur effect to chat messages */
+    position: relative; /* Make chat message the reference for the avatar */
+    margin-bottom: 50px;
+}
+
+/* Bot Messages */
+.chat-message.bot {
+    background: linear-gradient(to right, #bbdefb, #90caf9); /* Light blue gradient */
+    color: #0d47a1; /* Dark blue text for contrast */
+}
+
+/* User Messages */
+.chat-message.user {
+    background: linear-gradient(to right, #e3f2fd, #bbdefb); /* Light blue gradient */
+    color: #1e88e5; /* Blue text for contrast */
+}
+
+/* Avatar */
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Circular avatar */
+    position: absolute; /* Move the avatar outside the message box */
+    top: 10px; /* Adjust top placement */
+    left: -50px; /* Move avatar to the left */
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+/* Message Content */
+.message-content {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    flex-grow: 1; /* Allows message content to take remaining space */
+}
+
+/* Input Container */
+#chat-form {
+    display: flex; /* Align items horizontally */
+    margin: 15px; /* Space around the input area */
+    position: fixed; /* Fix to the bottom */
+    bottom: 0; /* Align to the bottom */
+    left: 15px; /* Space from the left */
+    right: 15px; /* Space from the right */
+    backdrop-filter: blur(10px); /* Apply blur effect to the input area */
+}
+
+/* Input Box */
+#user-input {
+    padding: 12px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    flex-grow: 1; /* Allow the input to take remaining space */
+    margin-right: 10px; /* Space between input and button */
+    
+}
+
+/* Button */
+button {
+    background-color: #0d47a1; /* Dark blue button */
+    color: white;
+    padding: 12px 15px; /* Adjusted horizontal padding */
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    max-width: 150px; /* Set a maximum width for the button */
+}
+
+/* Button Hover */
+button:hover {
+    background-color: #1976d2; /* Lighter blue on hover */
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <div id="chatbot-responses">
+                <div class="chat-message bot">
+                    <img src="https://mpost.io/wp-content/uploads/image-74-7.jpg" alt="Bot Avatar" class="avatar">
+                    <div class="message-content">Hello! Ask me anything.</div>
+                </div>
+            </div>
+        </div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('chat-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userInput = document.getElementById('user-input').value;
+
+            // Add the user's message to the chat box
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user';
+            userMessage.innerHTML = `
+                <img src="https://mpost.io/wp-content/uploads/image-74-7.jpg" alt="User Avatar" class="avatar">
+                <div class="message-content">${userInput}</div>
+            `;
+            document.getElementById('chatbot-responses').appendChild(userMessage);
+
+            // Clear the input field
+            document.getElementById('user-input').value = '';
+
+            fetch('/second/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'user_input': userInput
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botMessage = document.createElement('div');
+                botMessage.className = 'chat-message bot';
+                botMessage.innerHTML = `
+                    <img src="https://mpost.io/wp-content/uploads/image-74-7.jpg" alt="Bot Avatar" class="avatar">
+                    <div class="message-content">${data.response}</div>
+                `;
+                document.getElementById('chatbot-responses').appendChild(botMessage);
+
+                // Scroll to the bottom of the chat box
+                document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'chat-message bot';
+                errorMessage.innerHTML = `
+                    <img src="https://mpost.io/wp-content/uploads/image-74-7.jpg" alt="Bot Avatar" class="avatar">
+                    <div class="message-content">An error occurred. Please try again.</div>
+                `;
+                document.getElementById('chatbot-responses').appendChild(errorMessage);
+            });
+        });
+    </script>
+</body>
+</html>
