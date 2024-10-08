@@ -7,8 +7,8 @@ app = Flask(__name__)
 four_bp = Blueprint('four', __name__, template_folder='templates')
 
 # Load the trained model and face detector
-face_classifier = cv2.CascadeClassifier(r"D:/home (2)/home/Responsive-Website/Responsive-Education/haarcascade_frontalface_default.xml")
-classifier = load_model(r"D:/home (2)/home/Responsive-Website/Responsive-Education/model.h5")
+face_classifier = cv2.CascadeClassifier(r"/main/Responsive-Education/haarcascade_frontalface_default.xml")
+classifier = load_model(r"/main/Responsive-Education/model.h5")
 emotion_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
 emotion_tip = ""  # Global variable to store the current emotion tip
