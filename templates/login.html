@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Video Meeting</title>
+    <style>
+        /* General body styling with background image */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.redd.it/8sqkca4mtvl21.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            color:white;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Black transparent glass effect container styling */
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Black transparency */
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Form styling */
+        .form-container {
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* Reduced width for input fields */
+        .input-field {
+            width: 90%; /* Reduce width */
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+        }
+        h2,p{
+            color:green;
+        }
+
+        /* Button styling */
+        .btn {
+            background-color: #4CAF50;
+            color: black; /* Make text green */
+            padding: 10px 20px;
+            border: none;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 50%; /* Reduce button width */
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Error message styling */
+        .error {
+            color: red;
+            font-size: 0.8rem;
+        }
+
+        /* Link styling */
+        .link {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        /* Glass effect for form */
+        form {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 90%;
+                padding: 15px;
+            }
+
+            .input-field, .btn {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Login</h2>
+            <form action="{{ url_for('login') }}" method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class="input-field") }}
+                    {% for error in form.email.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="input-field") }}
+                    {% for error in form.password.errors %}
+                        <span class="error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>Don't have an account? <a class="link" href="{{ url_for('register') }}">Register here</a></p>
+        </div>
+    </div>
+</body>
+</html>
